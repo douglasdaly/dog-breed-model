@@ -1,0 +1,33 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+boltons = "*"
+click = "*"
+ipykernel = "*"
+ipywidgets = "*"
+kaggle = "*"
+matplotlib = "*"
+numpy = "*"
+pandas = "*"
+Pillow = "*"
+python-dotenv = "*"
+scikit-learn = "*"
+scipy = "*"
+seaborn = "*"
+tensorflow = "*"
+tqdm = "*"
+
+[dev-packages]
+coverage = "*"
+flake8 = "*"
+pytest = "*"
+pytest-cov = "*"
+pytest-xdist = "*"
+sphinx = "*"
+sphinx_rtd_theme = "*"
+
+[requires]
+python_version = "3.7"

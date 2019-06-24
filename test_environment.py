@@ -1,0 +1,48 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+Small script to test the newly created virtual environment.
+"""
+#
+#   Imports
+#
+import sys
+
+import click
+
+
+#
+#   Variables
+#
+
+REQUIRED_PYTHON = "python".lower()
+
+
+#
+#   Script functions
+#
+
+@click.command()
+def cli():
+    system_major = sys.version_info.major
+    if REQUIRED_PYTHON == "python":
+        required_major = 2
+    elif REQUIRED_PYTHON == "python3":
+        required_major = 3
+    else:
+        raise ValueError("Unrecognized python interpreter: {}".format(
+            REQUIRED_PYTHON)
+        )
+
+    if system_major != required_major:
+        raise TypeError(
+            "This project requires Python {}. Found: Python {}".format(
+                required_major, sys.version
+            )
+        )
+    else:
+        print(">>> Environment passes all tests")
+
+
+if __name__ == '__main__':
+    cli()
