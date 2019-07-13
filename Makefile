@@ -7,6 +7,7 @@ PROJECT_NAME = Dog Breed Model
 
 PYTHON = python
 PKG_MGR = pipenv
+TENSORBOARD = tensorboard
 UNIT_TEST = pytest
 
 
@@ -37,6 +38,7 @@ else
 endif
 
 PYTHON := $(RUN_PRE) $(PYTHON)
+TENSORBOARD := $(RUN_PRE) $(TENSORBOARD)
 UNIT_TEST := $(RUN_PRE) $(UNIT_TEST)
 
 ###############################################################################
@@ -88,6 +90,11 @@ media-generate: ## Generates media files for the project
 	@echo ">>> Generating media files"
 	@$(RUN_PRE) ./scripts/media.py generate
 
+# Tools
+
+tensorboard: ## Starts TensorBoard
+	$(TENSORBOARD) --logdir=logs/ 
+
 # Requirements
 
 requirements: ## Installs Python dependencies
@@ -133,6 +140,10 @@ clean-data: ## Deletes any processed data files/cooked data files
 clean-media: ## Removes any generated media files
 	@echo ">>> Removing all media files"
 	@rm -rf media/*.*
+
+clean-tensorflow: ## Removes log artifacts
+	@echo ">>> Removing all TensorFlow logs"
+	@rm -rf logs/*
 
 # Code
 
