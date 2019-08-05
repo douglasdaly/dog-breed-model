@@ -3,7 +3,7 @@
 *A CNN for predicting dog breeds from images.*
 
 This repository follows a 
-[post](https://www.douglasdaly.com/blog/dog-breed-identifier) on my 
+[post](https://www.douglasdaly.com/blog/dog-breed-identifier.html) on my 
 [blog](https://www.douglasdaly.com/blog).
 
 
