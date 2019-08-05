@@ -169,7 +169,7 @@ def cli(ctx):
 @click.pass_context
 def get(ctx):
     """
-    Tool for acquiring the raw data files.
+    Downloads the raw data files.
     """
     # Download the raw data using the kaggle API
     api.dataset_download_files(
@@ -186,7 +186,7 @@ def get(ctx):
               help='Random seed value to use in train/test split.')
 def process(ctx, test_size, seed):
     """
-    Tool for processing the raw data files.
+    Processes the raw data files.
     """
     # Extract the zip file and the subsequent tar files
     zfile = zipfile.ZipFile(os.path.join(RAW_DIR, 'stanford-dogs-dataset.zip'))
@@ -215,10 +215,50 @@ def process(ctx, test_size, seed):
 @click.pass_context
 def cook(ctx):
     """
-    Tool for cooking the processed data files.
+    Cooks the processed data files.
     """
     # [START] Data cooking code here
     pass
+
+
+@cli.command()
+@click.argument('path', type=click.STRING, nargs=-1, required=True)
+@click.option('--output', type=click.STRING, default=None, 
+              help='Output file to generate.')
+@click.pass_context
+def compress(ctx, path, output):
+    """
+    Compresses the specified paths into an archive.
+    """
+    if not output:
+        output = 'archive.tar.gz'
+    elif not output.endswith('.tar.gz'):
+        output += '.tar.gz'
+    
+    with tarfile.open(output, 'w:gz') as archive:
+        if len(path) > 1:
+            path_iter = tqdm(path, desc='Paths Processed', leave=False)
+        else:
+            path_iter = path
+        for p in path_iter:
+            repl_nm, fld_nm = os.path.split(p)
+            if os.path.isdir(p):
+                all_files = {}
+                for (rootdir, subdirs, files) in os.walk(p):
+                    arch_rdir = rootdir.replace(repl_nm, '')
+                    for f in files:
+                        f_path = os.path.join(rootdir, f)
+                        all_files[f_path] = os.path.join(arch_rdir, f)
+                
+                file_iter = tqdm(all_files.items(), desc=p, leave=False, 
+                                 position=1)
+                for fin, fout in file_iter:
+                    archive.add(fin, fout)
+            else:
+                archive.add(p, p.replace(repl_nm, ''))
+    
+    print(f'Archive created: {output}')
+    return
 
 
 #

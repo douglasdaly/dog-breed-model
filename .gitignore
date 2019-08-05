@@ -1,6 +1,8 @@
 # Tensorflow 
 logs/*
 models/**/*.hdf5
+models/**/*.pkl
+models/**/*.tar.gz
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
